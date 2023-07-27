@@ -1,0 +1,23 @@
+[package]
+name = "v2-sim"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+arbiter = { git = "https://github.com/Alexangelj/arbiter.git" }
+bindings = {path = "out/bindings"}
+m3-rs = { git = "https://github.com/primitivefinance/m3-rs.git" }
+tokio = { version = "1.28.1", features = ["macros", "full"] }
+bytes = "1.4.0"
+hex = { version = "0.4.3", default-features = false }
+revm = "3.3.0"
+ruint = "1.8.0"
+ethers = { version = "2.0.4", default-features = false, features = ["abigen"] }
+polars = "0.31.1"
+serde = { version = "1.0.163", features= ["derive"]}
+clap = { version = "4.3.19", features = ["derive"] }
+visualize = {git = "https://github.com/primitivefinance/visualization-rs.git", branch = "alex/copy-traits"}
+itertools-num = "0.1.3"
+statrs = "0.16.0"
