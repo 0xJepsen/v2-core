@@ -8,8 +8,13 @@ use arbiter::{
 use ethers::abi::Tokenize;
 use visualize::{design::*, plot::*};
 
-fn main() {
+mod setup;
+
+fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     let mut manager = SimulationManager::new();
+
+    setup::run(&mut manager)?;
     println!("Hello, world!");
+    Ok(())
 }

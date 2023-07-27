@@ -6,7 +6,7 @@ use arbiter::{
     utils::{float_to_wad, recast_address, unpack_execution},
 };
 // dynamic imports... generate with build.sh
-use bindings::{uniswap_v2_factory, uniswap_v2_pair, uniswap_v2_router02, weth};
+use bindings::{uniswap_v2_factory, uniswap_v2_pair};
 use ethers::{
     abi::{encode_packed, Token, Tokenize},
     prelude::{Address, U128, U256},
@@ -14,18 +14,16 @@ use ethers::{
 };
 use revm::primitives::B160;
 
-use super::common;
 
 pub fn run(manager: &mut manager::SimulationManager) -> Result<(), Box<dyn std::error::Error>> {
     let admin = manager.agents.get("admin").unwrap();
 
     // Deploy weth
-    let weth = SimulationContract::new(weth::WETH_ABI.clone(), weth::WETH_BYTECODE.clone());
-    let (weth_contract, _result) = admin.deploy(weth, vec![])?;
-
     let uniswap_v2_factory = SimulationContract::new(
-        uniswap_v2_factory::UNISWAP_V2_FACTORY_ABI.clone(),
-        uniswap_v2_factory::UNISWAP_V2_FACTORY_BYTECODE.clone(),
+        uniswap_v2_factory::UNISWAPV2FACTORY_ABI.clone(),
+        uniswap_v2_factory::UNISWAPV2FACTORY_BYTECODE.clone(),
     );
-    let (uniswap_v2_factory_contract, _result) = admin.deploy(uniswap_v2_factory, vec![])?;
+    let (uniswap_v2_factory_contract, result) = admin.deploy(uniswap_v2_factory, (recast_address(admin.address()).into_tokens()))?;
+    assert!(result.is_success());
+    Ok(())
 }
